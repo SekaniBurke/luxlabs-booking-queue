@@ -1,5 +1,6 @@
 const EDGE_FUNCTION_URL = "https://<project>.functions.supabase.co/submit-job";
 
+console.log("submit-job.js loaded!");
 document.getElementById("jobForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
