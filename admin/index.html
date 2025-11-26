@@ -1,0 +1,91 @@
+<!-- admin/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Dashboard — LUXLABS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module" src="/js/admin-guard.js"></script>
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Top Nav -->
+  <header class="bg-white shadow">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <div class="text-xl font-bold">LUXLABS Admin</div>
+        <nav class="space-x-3 text-sm text-gray-600">
+          <a href="/admin/index.html" class="hover:underline">Overview</a>
+          <a href="/admin/admin-jobs.html" class="hover:underline">Jobs</a>
+          <a href="/admin/laser-queue.html" class="hover:underline">Laser Queue</a>
+          <a href="/admin/3d-queue.html" class="hover:underline">3D Queue</a>
+        </nav>
+      </div>
+      <div>
+        <button id="signOutBtn" type="submit" class="text-sm text-gray-700 hover:underline">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto p-6">
+    <h2 class="text-2xl font-semibold mb-4">Overview</h2>
+
+    <div id="counters" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <!-- cards rendered by JS -->
+    </div>
+  </main>
+
+  <script type="module">
+    import { supabase } from "../js/supabase.js";
+    import { requireAdminOrRedirect } from "../js/auth.js";
+
+    await requireAdminOrRedirect();
+
+    // sign out
+    document.getElementById("signOutBtn").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.href = "/admin/login.html";
+    });
+
+    // load counters
+    async function loadCounters() {
+      const counts = {};
+
+      const qAll = await supabase.from("jobs").select("id", { count: "exact" });
+      counts.total = qAll.count ?? 0;
+
+      const qSubmitted = await supabase.from("jobs").select("id", { count: "exact" }).eq("queue_status", "submitted");
+      counts.submitted = qSubmitted.count ?? 0;
+
+      const qInProgress = await supabase.from("jobs").select("id", { count: "exact" }).eq("queue_status", "in_progress");
+      counts.in_progress = qInProgress.count ?? 0;
+
+      const qCompleted = await supabase.from("jobs").select("id", { count: "exact" }).eq("queue_status", "completed");
+      counts.completed = qCompleted.count ?? 0;
+
+      const container = document.getElementById("counters");
+      container.innerHTML = `
+        <div class="p-4 bg-white rounded shadow">
+          <div class="text-sm text-gray-500">Total Jobs</div>
+          <div class="text-2xl font-bold">${counts.total}</div>
+        </div>
+        <div class="p-4 bg-white rounded shadow">
+          <div class="text-sm text-gray-500">Submitted</div>
+          <div class="text-2xl font-bold">${counts.submitted}</div>
+        </div>
+        <div class="p-4 bg-white rounded shadow">
+          <div class="text-sm text-gray-500">In Progress</div>
+          <div class="text-2xl font-bold">${counts.in_progress}</div>
+        </div>
+        <div class="p-4 bg-white rounded shadow">
+          <div class="text-sm text-gray-500">Completed</div>
+          <div class="text-2xl font-bold">${counts.completed}</div>
+        </div>
+      `;
+    }
+
+    loadCounters();
+  </script>
+</body>
+</html>

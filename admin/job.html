@@ -1,0 +1,35 @@
+<!-- admin/job.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Job Detail</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module" src="/js/admin-guard.js"></script>
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Top nav -->
+  <header class="bg-white shadow">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <div class="text-xl font-bold">LUXLABS Admin</div>
+        <nav class="space-x-3 text-sm text-gray-600">
+          <a href="/admin/index.html" class="hover:underline">Overview</a>
+          <a href="/admin/admin-jobs.html" class="hover:underline">Jobs</a>
+        </nav>
+      </div>
+      <div>
+        <button id="signOutBtn" type="button" class="text-sm text-gray-700 hover:underline">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto p-6">
+    <div id="jobContainer" class="bg-white p-6 rounded shadow"></div>
+  </main>
+
+  <script type="module" src="../js/admin-job.js"></script>
+</body>
+</html>

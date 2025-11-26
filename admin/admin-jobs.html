@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin – Jobs</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+  <!-- Guard -->
+  <script type="module" src="/js/admin-guard.js"></script>
+
+  <!-- Top Nav -->
+  <nav class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold">Admin Dashboard</h1>
+
+    <div class="flex items-center gap-4">
+      <button id="refreshBtn" type="button" class="px-4 py-2 bg-blue-600 text-white rounded">
+        Refresh
+      </button>
+
+      <button id="signOutBtn" type="button" class="px-4 py-2 bg-red-600 text-white rounded">
+        Sign Out
+      </button>
+    </div>
+  </nav>
+
+  <!-- Filters -->
+  <div class="p-4 flex gap-4 items-center">
+    <select id="filterStatus" class="px-3 py-2 border rounded bg-white">
+      <option value="all">All Statuses</option>
+      <option value="pending_review">Pending Review</option>
+      <option value="processing">Processing</option>
+      <option value="completed">Completed</option>
+    </select>
+
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="Search by name or email..."
+      class="px-3 py-2 border rounded flex-1"
+    >
+  </div>
+
+  <!-- Jobs Table -->
+  <div class="p-4">
+    <div class="bg-white shadow rounded overflow-hidden">
+      <table class="min-w-full text-left">
+        <thead class="bg-gray-100">
+        <tr>
+            <th scope="col" class="p-3 text-left font-semibold">Customer</th>
+            <th scope="col" class="p-3 text-left font-semibold">Service</th>
+            <th scope="col" class="p-3 text-left font-semibold">Role</th>
+            <th scope="col" class="p-3 text-left font-semibold">Files</th>
+            <th scope="col" class="p-3 text-left font-semibold">Status</th>
+            <th scope="col" class="p-3 text-left font-semibold">Submitted</th>
+            <th scope="col" class="p-3 text-left font-semibold">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody id="jobsBody">
+          <tr>
+            <td colspan="7" class="p-4 text-center">Loading...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script type="module" src="/js/admin-jobs.js"></script>
+
+</body>
+</html>

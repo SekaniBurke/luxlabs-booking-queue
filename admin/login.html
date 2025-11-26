@@ -1,0 +1,32 @@
+<!-- admin/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Login — LUXLABS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module" src="/js/admin-guard.js"></script>
+</head>
+<body class="min-h-screen bg-gray-100 flex items-center justify-center">
+  <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-4 text-center">LUXLABS Admin</h1>
+
+    <form id="loginForm" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium">Email</label>
+        <input name="email" id="email" type="email" required class="w-full p-2 border rounded">
+      </div>
+      <div>
+        <label class="block text-sm font-medium">Password</label>
+        <input name="password" id="password" type="password" required class="w-full p-2 border rounded">
+      </div>
+
+      <button type="submit" class="w-full bg-indigo-600 text-white p-3 rounded">Sign in</button>
+      <p id="message" class="text-sm text-center mt-2"></p>
+    </form>
+  </div>
+
+  <script type="module" src="../js/auth.js"></script>
+</body>
+</html>
