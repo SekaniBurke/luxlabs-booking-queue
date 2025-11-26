@@ -3,7 +3,7 @@ console.log("submit-job.js loaded!");
 const form = document.getElementById("jobForm");
 const messageBox = document.getElementById("formMessage");
 
-const EDGE_FUNCTION_URL = "https://bvaykdrhpuknissuuqyi.supabase.co/functions/v1/submit-job";
+const EDGE_FUNCTION_URL = 'https://bvaykdrhpuknissuuqyi.supabase.co/functions/v1/submit-job';
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
