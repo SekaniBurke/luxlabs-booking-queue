@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUXLABS Job Submission</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <h1>LUXLABS Job Submission</h1>
+
+  <form id="jobForm">
+    <label>Name</label>
+    <input type="text" id="name" required>
+
+    <label>Email</label>
+    <input type="email" id="email" required>
+
+    <label>Affiliation</label>
+    <select id="affiliation" required>
+      <option value="student">Student</option>
+      <option value="faculty">Faculty/Staff</option>
+      <option value="external">External Client</option>
+    </select>
+
+    <label>ID Number (if student/faculty/staff)</label>
+    <input type="text" id="id_number">
+
+    <label>Is this for a class?</label>
+    <select id="is_class_project" required>
+      <option value="no">No</option>
+      <option value="yes">Yes</option>
+    </select>
+
+    <label>Class Name (if class project)</label>
+    <input type="text" id="class_name">
+
+    <label>Service Type</label>
+    <select id="service_type" required>
+      <option value="laser">Laser Cutting/Engraving</option>
+      <option value="3d_print">3D Printing</option>
+      <option value="prototype">Prototyping Consultation</option>
+      <option value="sample_production">Sample Production</option>
+    </select>
+
+    <label>Job Description</label>
+    <textarea id="description" required></textarea>
+
+    <label>File / Design Link</label>
+    <input type="text" id="file_link" placeholder="Google Drive or file URL">
+
+    <button type="submit">Submit Job</button>
+  </form>
+
+  <p id="statusMessage"></p>
+
+  <script type="module" src="js/submit-job.js"></script>
+</body>
+</html>
