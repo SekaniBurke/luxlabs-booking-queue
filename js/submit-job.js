@@ -1,32 +1,48 @@
-const EDGE_FUNCTION_URL = "https://<project>.functions.supabase.co/submit-job";
-
 console.log("submit-job.js loaded!");
-document.getElementById("jobForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
 
-  const form = e.target;
-  const messageBox = document.getElementById("formMessage");
+const form = document.getElementById("jobForm");
+const messageBox = document.getElementById("formMessage");
+
+const EDGE_FUNCTION_URL = "https://<YOUR-PROJECT-REF>.functions.supabase.co/submit-job";
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  console.log("Form submitted!");
+
   messageBox.textContent = "Submitting...";
-  messageBox.className = "text-blue-600";
+  messageBox.classList.remove("text-red-600", "text-green-600");
+  messageBox.classList.add("text-blue-600");
+
+  const formData = new FormData(form);
+
+  // Logging to verify what the form sees
+  console.log("FormData entries:");
+  for (let p of formData.entries()) console.log(p);
 
   try {
-    const formData = new FormData(form);
-
     const response = await fetch(EDGE_FUNCTION_URL, {
       method: "POST",
       body: formData,
     });
 
     const data = await response.json();
+    console.log("Edge Function Response:", data);
 
-    if (!response.ok) throw new Error(data.error || "Unknown error occurred.");
+    if (!response.ok) {
+      throw new Error(data.error || "Failed to submit job");
+    }
 
     messageBox.textContent = "Job submitted successfully!";
-    messageBox.className = "text-green-600";
+    messageBox.classList.remove("text-blue-600");
+    messageBox.classList.add("text-green-600");
+
     form.reset();
+
   } catch (err) {
-    console.error(err);
-    messageBox.textContent = err.message || "Error submitting job.";
-    messageBox.className = "text-red-600";
+    console.error("Submission Error:", err);
+
+    messageBox.textContent = "Error: " + err.message;
+    messageBox.classList.remove("text-blue-600");
+    messageBox.classList.add("text-red-600");
   }
 });
