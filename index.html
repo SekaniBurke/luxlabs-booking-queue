@@ -4,57 +4,89 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LUXLABS Job Submission</title>
-  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-  <h1>LUXLABS Job Submission</h1>
+<body class="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center p-4">
 
-  <form id="jobForm">
-    <label>Name</label>
-    <input type="text" id="name" required>
+  <div class="max-w-xl w-full bg-white shadow-lg rounded-lg p-6">
 
-    <label>Email</label>
-    <input type="email" id="email" required>
+    <h1 class="text-3xl font-bold text-center mb-6">LUXLABS Job Submission</h1>
 
-    <label>Affiliation</label>
-    <select id="affiliation" required>
-      <option value="student">Student</option>
-      <option value="faculty">Faculty/Staff</option>
-      <option value="external">External Client</option>
-    </select>
+    <form id="jobForm" class="space-y-4">
 
-    <label>ID Number (if student/faculty/staff)</label>
-    <input type="text" id="id_number">
+      <div>
+        <label class="font-semibold">Full Name</label>
+        <input type="text" name="full_name" required class="w-full p-2 border rounded focus:ring focus:ring-indigo-300">
+      </div>
 
-    <label>Is this for a class?</label>
-    <select id="is_class_project" required>
-      <option value="no">No</option>
-      <option value="yes">Yes</option>
-    </select>
+      <div>
+        <label class="font-semibold">Email</label>
+        <input type="email" name="email" required class="w-full p-2 border rounded focus:ring focus:ring-indigo-300">
+      </div>
 
-    <label>Class Name (if class project)</label>
-    <input type="text" id="class_name">
+      <div>
+        <label class="font-semibold">Affiliation</label>
+        <select name="role" required class="w-full p-2 border rounded focus:ring focus:ring-indigo-300">
+          <option value="">Select your status</option>
+          <option value="student">Student</option>
+          <option value="faculty">Faculty/Staff</option>
+          <option value="external">External Client</option>
+        </select>
+      </div>
 
-    <label>Service Type</label>
-    <select id="service_type" required>
-      <option value="laser">Laser Cutting/Engraving</option>
-      <option value="3d_print">3D Printing</option>
-      <option value="prototype">Prototyping Consultation</option>
-      <option value="sample_production">Sample Production</option>
-    </select>
+      <div>
+        <label class="font-semibold">ID Number (if applicable)</label>
+        <input type="text" name="id_number" class="w-full p-2 border rounded focus:ring focus:ring-indigo-300">
+      </div>
 
-    <label>Job Description</label>
-    <textarea id="description" required></textarea>
+      <div>
+        <label class="font-semibold">Is this for a class project?</label>
+        <select name="class_project" required class="w-full p-2 border rounded focus:ring focus:ring-indigo-300">
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
+      </div>
 
-    <label>File / Design Link</label>
-    <input type="text" id="file_link" placeholder="Google Drive or file URL">
+      <div>
+        <label class="font-semibold">Class Name (if applicable)</label>
+        <input type="text" name="class_name" class="w-full p-2 border rounded focus:ring focus:ring-indigo-300">
+      </div>
 
-    <button type="submit">Submit Job</button>
-  </form>
+      <div>
+        <label class="font-semibold">Service Type</label>
+        <select name="service_type" required class="w-full p-2 border rounded focus:ring focus:ring-indigo-300">
+          <option value="laser">Laser Cutting/Engraving</option>
+          <option value="3d_print">3D Printing</option>
+          <option value="prototype">Prototyping Consultation</option>
+          <option value="sample_production">Sample Production</option>
+        </select>
+      </div>
 
-  <p id="statusMessage"></p>
+      <div>
+        <label class="font-semibold">Job Description</label>
+        <textarea name="description" required class="w-full p-2 border rounded focus:ring focus:ring-indigo-300 h-28"></textarea>
+      </div>
+
+      <div>
+        <label class="font-semibold">Upload File(s) (optional)</label>
+        <input type="file" name="job_files" id="job_files" class="w-full p-2 border rounded" multiple>
+        <p class="text-gray-500 text-sm mt-1">You may upload multiple files.</p>
+      </div>
+
+      <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white p-3 rounded-lg font-medium">
+        Submit Job
+      </button>
+
+    </form>
+
+    <p id="formMessage" class="mt-4 text-center text-lg font-semibold"></p>
+
+  </div>
 
   <script type="module" src="js/submit-job.js"></script>
+
 </body>
 </html>

@@ -1,34 +1,31 @@
-import { supabase } from "./supabase.js";
+const EDGE_FUNCTION_URL = "https://<project>.functions.supabase.co/submit-job";
 
 document.getElementById("jobForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const job = {
-    name: document.getElementById("name").value,
-    email: document.getElementById("email").value,
-    affiliation: document.getElementById("affiliation").value,
-    id_number: document.getElementById("id_number").value || null,
-    is_class_project: document.getElementById("is_class_project").value === "yes",
-    class_name: document.getElementById("class_name").value || null,
-    service_type: document.getElementById("service_type").value,
-    description: document.getElementById("description").value,
-    file_link: document.getElementById("file_link").value || null,
-    status: "pending_review",
-  };
+  const form = e.target;
+  const messageBox = document.getElementById("formMessage");
+  messageBox.textContent = "Submitting...";
+  messageBox.className = "text-blue-600";
 
-  const { data, error } = await supabase.from("jobs").insert(job);
+  try {
+    const formData = new FormData(form);
 
-  const statusMessage = document.getElementById("statusMessage");
+    const response = await fetch(EDGE_FUNCTION_URL, {
+      method: "POST",
+      body: formData,
+    });
 
-  if (error) {
-    console.error(error);
-    statusMessage.textContent = "Error submitting job. Please try again.";
-    statusMessage.style.color = "red";
-  } else {
-    statusMessage.textContent =
-      "Job submitted successfully! You will receive a confirmation email after review.";
-    statusMessage.style.color = "green";
+    const data = await response.json();
 
-    document.getElementById("jobForm").reset();
+    if (!response.ok) throw new Error(data.error || "Unknown error occurred.");
+
+    messageBox.textContent = "Job submitted successfully!";
+    messageBox.className = "text-green-600";
+    form.reset();
+  } catch (err) {
+    console.error(err);
+    messageBox.textContent = err.message || "Error submitting job.";
+    messageBox.className = "text-red-600";
   }
 });
